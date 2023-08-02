@@ -9,21 +9,32 @@ public class LogicScript : MonoBehaviour
     public int playerScore;
     public Text scoreText;
     public GameObject gameOverScreen;
+    public GameObject pauseScreen;
+    public AudioSource scoreSound;
 
     [ContextMenu("Increase Score")]
     public void addScore(int scoreToAdd)
     {
-        playerScore += scoreToAdd;
-        scoreText.text = playerScore.ToString();
+        if (!gameOverScreen.activeSelf)
+        {
+            playerScore += scoreToAdd;
+            scoreText.text = playerScore.ToString();
+            scoreSound.Play();
+        }
     }
 
-    public void restartGame()
+    public void startGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene("GameScreen");
     }
 
     public void gameOver()
     {
         gameOverScreen.SetActive(true);
+    }
+
+    public void quitGame()
+    {
+        Application.Quit();
     }
 }
